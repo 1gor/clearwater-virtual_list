@@ -33,7 +33,11 @@ MyVirtualList = Clearwater::VirtualList.create do |items:, list_style:, item_sty
     item_style: item_style,
   )
 end
+```
 
+Use the `items` and `item_height` keyword arguments to the component when using it:
+
+```ruby
 class Layout
   include Clearwater::Component
 
