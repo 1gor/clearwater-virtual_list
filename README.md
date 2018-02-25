@@ -1,8 +1,6 @@
 # Clearwater::VirtualList
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/clearwater/virtual_list`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Render a virtual list of Clearwater components where list items outside of the visible area of the page are not rendered. They are inserted just in time while scrolling and removed when they are no longer visible.
 
 ## Installation
 
@@ -22,7 +20,19 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Inside your Clearwater app:
+
+```ruby
+require 'clearwater/virtual_list'
+
+MyVirtualList = Clearwater::VirtualList.create do |items:, list_style:, item_style:|
+  MyList.new(
+    items: items,
+    list_style: list_style,
+    item_style: item_style,
+  )
+end
+```
 
 ## Development
 
@@ -32,7 +42,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/clearwater-virtual_list. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/clearwater-rb/clearwater-virtual_list. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -40,4 +50,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Clearwater::VirtualList project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/clearwater-virtual_list/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Clearwater::VirtualList project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/clearwater-rb/clearwater-virtual_list/blob/master/CODE_OF_CONDUCT.md).
