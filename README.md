@@ -25,12 +25,27 @@ Inside your Clearwater app:
 ```ruby
 require 'clearwater/virtual_list'
 
+# Define the virtual list component in terms of your regular list component
 MyVirtualList = Clearwater::VirtualList.create do |items:, list_style:, item_style:|
   MyList.new(
     items: items,
     list_style: list_style,
     item_style: item_style,
   )
+end
+
+class Layout
+  include Clearwater::Component
+
+  def render
+    div([
+      h1('My list of things'),
+      MyVirtualList.new(
+        items: all_the_things, # The full list of items
+        item_height: 100,      # The height of each item in pixels
+      ),
+    ])
+  end
 end
 ```
 
