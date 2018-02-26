@@ -15,7 +15,7 @@ module Clearwater
               box_sizing: 'border-box',
             },
             item_style: {
-              height: "#{@item_height}px",
+              height: "#{height}px",
               box_sizing: 'border-box',
             },
           )
