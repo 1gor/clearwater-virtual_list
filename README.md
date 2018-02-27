@@ -23,7 +23,31 @@ Or install it yourself as:
 Inside your Clearwater app:
 
 ```ruby
+require 'clearwater/component'
 require 'clearwater/virtual_list'
+
+class MyList
+  include Clearwater::Component
+  
+  def initialize(items: [], list_style:, item_style:)
+    # VirtualList will give you the items to render within the viewport
+    @items = items
+    
+    # Make sure you set your list container's style property to this value
+    @list_style = list_style
+    
+    # Make sure the list items' styles are set with this
+    @item_style = item_style
+  end
+  
+  def render
+    ul({ style: @list_style }, @items.map { |item|
+      li({ style: @item_style }, [
+        # ...
+      ])
+    })
+  end
+end
 
 # Define the virtual list component in terms of your regular list component
 MyVirtualList = Clearwater::VirtualList.create do |items:, list_style:, item_style:|
