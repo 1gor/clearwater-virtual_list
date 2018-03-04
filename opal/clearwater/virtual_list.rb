@@ -1,4 +1,3 @@
-require 'clearwater/virtual_dom'
 require 'clearwater/black_box_node'
 require 'bowser'
 
@@ -28,9 +27,10 @@ module Clearwater
     class Component
       include Clearwater::BlackBoxNode
 
-      attr_reader :items, :height, :first, :last
+      attr_reader :items, :height
       attr_reader :onscroll, :onresize
-      attr_reader :vdom
+      attr_reader :app
+      attr_accessor :first, :last
 
       def initialize(items, item_height:)
         @items = items
@@ -38,7 +38,11 @@ module Clearwater
       end
 
       def mount element
-        @vdom = Clearwater::VirtualDOM::Document.new(element)
+        @app = Clearwater::Application.new(
+          component: Container.new(self),
+          router: NullRouter.new,
+          element: element,
+        )
         @onscroll = Bowser.window.on(:scroll) { render_content element }
         @onresize = Bowser.window.on(:resize) { render_content element }
 
@@ -46,7 +50,8 @@ module Clearwater
       end
 
       def update previous, element
-        @vdom = previous.vdom
+        @app = previous.app
+        @app.component.list = self
         @onscroll = previous.onscroll
         @onresize = previous.onresize
 
@@ -63,8 +68,9 @@ module Clearwater
       end
 
       def render_content(element)
-        @first, @last = visible_item_bounds(element)
-        vdom.render Clearwater::Component.sanitize_content(content)
+        app.component.list.first, app.component.list.last = visible_item_bounds(element)
+
+        app.perform_render
       end
 
       def visible_item_bounds(element)
@@ -95,6 +101,28 @@ module Clearwater
 
       def total_height
         height * items.count
+      end
+
+      class Container
+        include Clearwater::Component
+
+        attr_accessor :list
+
+        def initialize list
+          @list = list
+        end
+
+        def render
+          list.content
+        end
+      end
+
+      class NullRouter
+        def application= _
+        end
+
+        def set_outlets
+        end
       end
     end
   end
