@@ -57,7 +57,7 @@ module Clearwater
         render_content element
       end
 
-      def destroy
+      def unmount
         Bowser.window.off :scroll, &onscroll
         Bowser.window.off :resize, &onresize
       end
