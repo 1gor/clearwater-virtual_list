@@ -68,7 +68,7 @@ module Clearwater
       end
 
       def render_content(element)
-        app.component.list.first, app.component.list.last = visible_item_bounds(element)
+        app.component.list.first, app.component.list.last = app.component.list.visible_item_bounds(element)
 
         app.perform_render
       end
